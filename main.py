@@ -17,7 +17,7 @@ def main() -> None:
     # cell2.draw_move(cell3)
     # cell1.draw_move(cell2, undo=True)
     maze = Maze(
-        Point(10, 10),
+        Point(30, 30),
         10,
         10,
         window,

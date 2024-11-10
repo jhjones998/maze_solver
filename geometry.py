@@ -35,13 +35,13 @@ class Line:
 class Cell:
     def __init__(
             self,
-            window: Window,
             top_left: Point,
             bottom_right: Point,
             has_left_wall: bool,
             has_right_wall: bool,
             has_top_wall: bool,
-            has_bottom_wall: bool
+            has_bottom_wall: bool,
+            window: Window,
     ) -> None:
         self._window = window
         self._top_left = top_left
@@ -54,14 +54,24 @@ class Cell:
         self.has_bottom_wall = has_bottom_wall
 
     def draw(self):
-        if self.has_left_wall:
-            self._window.draw_line(Line(self._top_left, self._bottom_left), "black")
-        if self.has_right_wall:
-            self._window.draw_line(Line(self._top_right, self._bottom_right), "black")
-        if self.has_top_wall:
-            self._window.draw_line(Line(self._top_left, self._top_right), "black")
-        if self.has_bottom_wall:
-            self._window.draw_line(Line(self._bottom_left, self._bottom_right), "black")
+        erase_fill_color = "white"
+        draw_fill_color = "black"
+        self._window.draw_line(
+            Line(self._top_left, self._bottom_left),
+            draw_fill_color if self.has_left_wall else erase_fill_color
+        )
+        self._window.draw_line(
+            Line(self._top_right, self._bottom_right),
+            draw_fill_color if self.has_right_wall else erase_fill_color
+        )
+        self._window.draw_line(
+            Line(self._top_left, self._top_right),
+            draw_fill_color if self.has_top_wall else erase_fill_color
+        )
+        self._window.draw_line(
+            Line(self._bottom_left, self._bottom_right),
+            draw_fill_color if self.has_bottom_wall else erase_fill_color
+        )
 
     def get_middle_point(self) -> Point:
         return (self._top_left + self._bottom_right) // 2
